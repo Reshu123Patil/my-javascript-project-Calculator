@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+</head>
+<body class="d-flex flex-column align-items-center justify-content-center p-3 min-vh-100 bg-light">
+
+    <div class="container" style="max-width: 450px;">
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-body p-4 text-center">
+                
+                <!-- Top Navigation / Mode Selector -->
+                <div class="mb-4 pb-3 border-bottom d-flex align-items-center justify-content-between gap-3">
+                    <div class="position-relative w-100">
+                        <i class="bi bi-grid-1x2 position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                        <select name="setting" id="setting" class="form-select ps-5 bg-light border-0 fw-medium text-secondary py-2 rounded-3" onchange="location = this.value;">
+                            <option value="Calculator.html">Math Calculator</option>
+                            <option value="AgeCalculator.html" selected>Age Calculator</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Header -->
+                <h3 class="fw-bold text-primary mb-1">Age Calculator</h3>
+                <p class="text-muted small mb-4">Find out your exact age instantly</p>
+                
+                <!-- Input Form -->
+                <div class="text-start mb-3">
+                    <label for="todaysDate" class="form-label fw-semibold text-secondary">Age at the Date of</label>
+                    <input type="date" id="todaysDate" class="form-control form-control-lg rounded-3 shadow-none">
+                </div>
+                
+                <div class="text-start mb-3">
+                    <label for="birthdate" class="form-label fw-semibold text-secondary">Select Your Birthdate</label>
+                    <input type="date" id="birthdate" class="form-control form-control-lg rounded-3 shadow-none">
+                </div>
+                
+                <!-- Calculate Button -->
+                <button onclick="calculateAge()" class="btn btn-primary btn-lg w-100 rounded-3 mb-4 fw-bold">
+                    Calculate Age
+                </button>
+                
+                <!-- Output Result Display -->
+                <div id="result" class="d-none animate fadeIn">
+                    <hr class="text-muted my-3">
+                    <p class="mb-1 text-muted text-uppercase tracking-wider small fw-bold">Your Age Is</p>
+                    <h2 id="ageDisplay" class="fw-bold text-black display-6 mb-0"></h2>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic File Link -->
+    <script src="../src/scripts/AgeCalculator.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+</body>
+
+</html>

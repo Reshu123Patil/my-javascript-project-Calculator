@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Custom Style Adjustments -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        .calculator-box {
+            max-width: 360px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        .my-btn {
+            height: 55px;
+            font-size: 1.25rem;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+        .my-btn:hover {
+            transform: scale(1.03);
+        }
+        .op-btn {
+            background-color: #e7f1ff;
+            color: #0d6efd;
+            border-color: #b6d4fe;
+        }
+        .eq-btn {
+            background-color: #0d6efd;
+            color: #ffffff;
+        }
+        .eq-btn:hover {
+            background-color: #0b5ed7;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column align-items-center justify-content-center p-3 min-vh-100 bg-light">
+
+    <!-- Main Card Container -->
+    <div class="calculator-box p-4 shadow bg-white rounded-4" style="max-width: 400px; width: 100%;">
+        
+        <!-- Top Navigation / Mode Selector -->
+        <div class="mb-4 pb-3 border-bottom d-flex align-items-center justify-content-between gap-3">
+            <div class="position-relative w-100">
+                <i class="bi bi-grid-1x2 position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                <select name="setting" id="setting" class="form-select ps-5 bg-light border-0 fw-medium text-secondary py-2 rounded-3" onchange="location = this.value;">
+                    <option value="Calculator.html" selected>Math Calculator</option>
+                    <option value="AgeCalculator.html">Age Calculator</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Header Title with Icon -->
+       <div class="d-flex align-items-center justify-content-between mb-4 text-secondary px-1">
+    <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-calculator-fill fs-4 text-primary"></i>
+        <h1 class="h5 m-0 fw-bold text-dark">Math Calculator</h1>
+    </div>
+    <!-- FIXED: Added Bootstrap toggle attributes back onto the button element -->
+    <button class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center" 
+            id="history" 
+            data-bs-toggle="offcanvas" 
+            data-bs-target="#list">
+        <i class="bi bi-clock-history fs-5"></i>
+    </button>
+</div>
+
+        <!-- Upper Quick-Calc Field -->
+        <div class="input-group mb-3 shadow-sm rounded-3 overflow-hidden">
+            <input type="text" class="form-control border-end-0 py-2" id="cal" placeholder="Type formula...">
+            <button class="btn btn-danger px-3 bi bi-x-lg" type="button" onclick="deleteClick()"></button>
+            <button class="btn btn-primary px-3 fw-bold" type="button" onclick="CalculateButtonClick()">Calc</button>
+        </div>
+
+        <!-- Main Display Panel -->
+        <div class="mb-4">
+            <input type="text" id="display" class="form-control text-end fs-1 fw-semibold bg-light py-1 px-3 border-0 rounded-3 text-dark" readonly value="0">
+        </div>
+
+        <!-- Keypad Grid Layout -->
+        <div class="row g-2">
+            <!-- Column 1 -->
+            <div class="col-3 d-flex flex-column gap-2">
+                <button class="btn btn-outline-secondary my-btn op-btn" value="(">(</button>
+                <button class="btn btn-outline-dark my-btn" value="7">7</button>
+                <button class="btn btn-outline-dark my-btn" value="4">4</button>
+                <button class="btn btn-outline-dark my-btn" value="1">1</button>
+                <button class="btn btn-outline-dark my-btn" value="0">0</button>
+            </div>
+            <!-- Column 2 -->
+            <div class="col-3 d-flex flex-column gap-2">
+                <button class="btn btn-outline-secondary my-btn op-btn" value=")">)</button>
+                <button class="btn btn-outline-dark my-btn" value="8">8</button>
+                <button class="btn btn-outline-dark my-btn" value="5">5</button>
+                <button class="btn btn-outline-dark my-btn" value="2">2</button>
+                <button class="btn btn-outline-dark my-btn" value=".">.</button>
+            </div>
+            <!-- Column 3 -->
+            <div class="col-3 d-flex flex-column gap-2">
+                <button class="btn btn-outline-secondary my-btn op-btn" value="%">%</button>
+                <button class="btn btn-outline-dark my-btn" value="9">9</button>
+                <button class="btn btn-outline-dark my-btn" value="6">6</button>
+                <button class="btn btn-outline-dark my-btn" value="3">3</button>
+                <button class="btn eq-btn my-btn fw-bold btn-success" value="=">=</button>
+            </div>
+            <!-- Column 4 Operations -->
+            <div class="col-3 d-flex flex-column gap-2">
+                <button class="btn btn-danger my-btn fw-bold" value="CE">CE</button>
+                <button class="btn btn-outline-primary my-btn op-btn" value="/">/</button>
+                <button class="btn btn-outline-primary my-btn op-btn" value="*">*</button>
+                <button class="btn btn-outline-primary my-btn op-btn" value="-">-</button>
+                <button class="btn btn-outline-primary my-btn op-btn" value="+">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Offcanvas Panel (Updated sizes for better responsiveness) -->
+    <div class="offcanvas offcanvas-end" id="list" style="max-width: 350px;">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="fw-bold m-0">Calculation History</h5>
+            <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column justify-content-between">
+            <ul id="history-list" class="list-group mt-2">
+                <!-- History items will be dynamically added here -->
+            </ul>
+            <div class="pt-3 mt-auto">
+                <button type="button" class="btn btn-outline-danger w-100 fw-medium" id="clearHistory">Clear History</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS & Logic -->
+    <script src="../src/scripts/Calculator.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+</body>
+
+</html>
